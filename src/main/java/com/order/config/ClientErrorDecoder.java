@@ -24,7 +24,7 @@ public class ClientErrorDecoder implements ErrorDecoder {
 	ObjectMapper mapper = new ObjectMapper();
 	mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 	final var error = mapper.readValue(result, BusinessException.class);
-	return new BusinessException("Origem", error.getMessage());
+	return new BusinessException(error.getMessage());
 	//return new BusinessException(error.getMessage());
 	
 	

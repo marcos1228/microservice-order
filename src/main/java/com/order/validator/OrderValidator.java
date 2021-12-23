@@ -21,29 +21,28 @@ public class OrderValidator {
 
 	@Autowired
 	private OfferClient offerClient;
-	
+
 	@Autowired
 	private MessageBuilder messageBuilder;
 
 	public void validatorProduct(OrderRequestDto object) {
 		Optional<ProductResponseDto> product = productClient.getByProduct(object.getIdProduct());
-		if (product.isEmpty()) {
-			throw new BusinessException(messageBuilder.getMessage("{message.exception.product}"));
+		if (product.isPresent()) {
+		} else {
+			throw new BusinessException(messageBuilder.getMessage("message.exception.product"));
 		}
 	}
+
 	public void validatorOffer(OrderRequestDto object) {
-		String idOffer = object.getIdOffer();
-		if(idOffer.isEmpty()) {
-			Optional<OfferResponseDto> optionalOffer = offerClient.getByOffer(idOffer);
-			if (optionalOffer.isEmpty()) {
-				throw new BusinessException(messageBuilder.getMessage("{message.exception.offer}"));
-			} else {
-				String idProduct = object.getIdProduct();
-				String idProduct2 = optionalOffer.get().getIdProduct();
-				if (!idProduct.equals(idProduct2)) {
-					throw new BusinessException(messageBuilder.getMessage("message.exception.offernaocadastrada"));
-				}
+		Optional<OfferResponseDto> optionalOffer = offerClient.getByOffer(object.getIdOffer());
+		if (optionalOffer.isPresent()) {
+			String idProduct = object.getIdProduct();
+			String idProduct2 = optionalOffer.get().getIdProduct();
+			if (!idProduct.equals(idProduct2)) {
+				throw new BusinessException(messageBuilder.getMessage("message.exception.offernaocadastrada"));
 			}
+		} else {
+			throw new BusinessException(messageBuilder.getMessage("Oferta não existe"));
 		}
 	}
 }

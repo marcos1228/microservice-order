@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 
 import com.order.domain.dto.request.OrderRequestDto;
 import com.order.domain.dto.request.OrderRequestUpdateDto;
+import com.order.domain.dto.response.OfferResponseDto;
 import com.order.domain.dto.response.OrderResponseDto;
 import com.order.domain.dto.response.ProductResponseDto;
 import com.order.domain.model.Order;
@@ -42,7 +43,7 @@ public class ScenarioFactory {
 		 ZoneOffset.systemDefault()));
 		return order;
 	}
-
+	
 	public static OrderResponseDto orderResponseDto() {
 		var order = new OrderResponseDto();
 		order.setIdProduct("03");
@@ -53,6 +54,12 @@ public class ScenarioFactory {
 		return order;
 	}
 
+	public static OfferResponseDto offerResponseDto() {
+		var order = new OfferResponseDto();
+		order.setIdProduct("03");
+		return order;
+	}
+	
 	public static Optional<Order> newOptionalOrder() {
 		return Optional.of(newOrder());
 	}
@@ -84,6 +91,31 @@ public class ScenarioFactory {
 
 	public static Optional<ProductResponseDto> newProduct() {
 		return Optional.of(new ProductResponseDto());
-		
+	}
+	
+	public static Optional<ProductResponseDto> newProductNullo() {
+		return Optional.empty();
+	}
+
+	public static Optional<OfferResponseDto> newOffer() {
+		return Optional.of(new OfferResponseDto());
+	}
+
+	public static Optional<OfferResponseDto> newOffer1() {
+		return Optional.of( offerResponseDto());
+	}
+	
+	public static Optional<OfferResponseDto> newOfferNullo() {
+		return Optional.empty();
+	}
+	public static OrderRequestDto orderRequestDto1() {
+		var order = new OrderRequestDto();
+		order.setIdProduct("15");
+		order.setIdOffer("03");
+		order.setDescription("Tomada para pele");
+		order.setDescription("10");
+		 order.setInstante(LocalDate.ofInstant(Instant.now(),
+		 ZoneOffset.systemDefault()));
+		return order;
 	}
 }
