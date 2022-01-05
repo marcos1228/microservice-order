@@ -25,24 +25,24 @@ public class OrderValidator {
 	@Autowired
 	private MessageBuilder messageBuilder;
 
-	public void validatorProduct(OrderRequestDto object) {
-		Optional<ProductResponseDto> product = productClient.getByProduct(object.getIdProduct());
-		if (product.isPresent()) {
-		} else {
-			throw new BusinessException(messageBuilder.getMessage("message.exception.product"));
-		}
-	}
-
-	public void validatorOffer(OrderRequestDto object) {
-		Optional<OfferResponseDto> optionalOffer = offerClient.getByOffer(object.getIdOffer());
-		if (optionalOffer.isPresent()) {
-			String idProduct = object.getIdProduct();
-			String idProduct2 = optionalOffer.get().getIdProduct();
-			if (!idProduct.equals(idProduct2)) {
-				throw new BusinessException(messageBuilder.getMessage("message.exception.offernaocadastrada"));
-			}
-		} else {
-			throw new BusinessException(messageBuilder.getMessage("Oferta não existe"));
-		}
-	}
+//	public void validatorProduct(OrderRequestDto object) {
+//		Optional<ProductResponseDto> product = productClient.getByProduct(object.getIdProduct());
+//		if (product.isPresent()) {
+//		} else {
+//			throw new BusinessException(messageBuilder.getMessage("message.exception.product"));
+//		}
+//	}
+//
+//	public void validatorOffer(OrderRequestDto object) {
+//			Optional<OfferResponseDto> optionalOffer = offerClient.getByOffer(object.getIdOffer());
+//			if (optionalOffer.isPresent()) {
+//				String idProduct = object.getIdProduct();
+//				String idProduct2 = optionalOffer.get().getIdProduct();
+//				if (!idProduct.equals(idProduct2)) {
+//					throw new BusinessException(messageBuilder.getMessage("message.exception.offernaocadastrada"));
+//				}
+//			} else {
+//				throw new BusinessException(messageBuilder.getMessage("message.exception.offer"));
+//			}
+//	}
 }

@@ -3,10 +3,6 @@ package com.order.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,13 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.bind.annotation.RestController;
 
-import com.order.controller.client.OfferClient;
 import com.order.domain.dto.request.OrderRequestDto;
 import com.order.domain.dto.request.OrderRequestUpdateDto;
 import com.order.domain.dto.response.OrderResponseDto;
+import com.order.domain.model.Order;
 import com.order.service.OrderService;
 
 import io.swagger.annotations.Api;
@@ -46,21 +42,21 @@ public class OrderController {
 			@ApiResponse(code = 401, message = "O cliente deve está autenticado ao sistema"),
 			@ApiResponse(code = 500, message = "Erro interno do servidor") })
 	@GetMapping("/{id}")
-	public ResponseEntity<OrderResponseDto> getByOrder(@PathVariable String id) {
+	public ResponseEntity<Order> getByOrder(@PathVariable Long id) {
 		return ResponseEntity.ok().body(service.getByOrder(id));
 	}
 
-	@ApiOperation(value = "Retorna uma lista de pedido", notes = "Este endpoint retorna uma lista de pedido")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Requisição feita com sucesso"),
-			@ApiResponse(code = 403, message = "Cliente não autorizado"),
-			@ApiResponse(code = 401, message = "O cliente deve está autenticado no sistema"),
-			@ApiResponse(code = 500, message = "Erro interno do servidor") })
-	@GetMapping()
-	public ResponseEntity<Page<OrderResponseDto>> getByDescription(
-			@RequestParam(required = false, defaultValue = "%") String description,
-			@PageableDefault(sort = "description", direction = Direction.ASC, page = 0, size = 5) Pageable pageable) {
-		return ResponseEntity.ok().body(service.findByDescription(description, pageable));
-	}
+//	@ApiOperation(value = "Retorna uma lista de pedido", notes = "Este endpoint retorna uma lista de pedido")
+//	@ApiResponses(value = { @ApiResponse(code = 200, message = "Requisição feita com sucesso"),
+//			@ApiResponse(code = 403, message = "Cliente não autorizado"),
+//			@ApiResponse(code = 401, message = "O cliente deve está autenticado no sistema"),
+//			@ApiResponse(code = 500, message = "Erro interno do servidor") })
+//	@GetMapping()
+//	public ResponseEntity<Page<OrderResponseDto>> getByDescription(
+//			@RequestParam(required = false, defaultValue = "%") String description,
+//			@PageableDefault(sort = "description", direction = Direction.ASC, page = 0, size = 5) Pageable pageable) {
+//		return ResponseEntity.ok().body(service.findByDescription(description, pageable));
+//	}
 
 	@ApiOperation(value = "Salvar Pedido", notes = "Este endpoint salvar um pedido ")
 	@ApiResponses({ @ApiResponse(code = 201, message = "Pedido cadastrado com sucesso"),
@@ -68,9 +64,9 @@ public class OrderController {
 			@ApiResponse(code = 403, message = "Cliente não autorizado"),
 			@ApiResponse(code = 500, message = "Erro interno do servidor") })
 	@PostMapping()
-	public ResponseEntity<OrderResponseDto> save(@Valid @RequestBody OrderRequestDto dto) {
-		OrderResponseDto order = service.save(dto);
-		return ResponseEntity.status(HttpStatus.CREATED).body(order);
+	public ResponseEntity<OrderResponseDto> save(@Valid @RequestBody OrderRequestDto orderRequestDto) {
+		OrderResponseDto save = service.save(orderRequestDto);
+		return ResponseEntity.status(HttpStatus.CREATED).body(save);
 	}
 
 	@ApiOperation(value = "Atualizar um pedido", notes = "Este endpoint atualizar um pedido")
@@ -81,7 +77,7 @@ public class OrderController {
 			@ApiResponse(code = 500, message = "Erro interno do servidor") })
 
 	@PutMapping("/{id}")
-	public ResponseEntity<OrderResponseDto> update(@PathVariable String id, @RequestBody OrderRequestUpdateDto dto) {
+	public ResponseEntity<OrderResponseDto> update(@PathVariable Long id, @RequestBody OrderRequestUpdateDto dto) {
 		return ResponseEntity.ok().body(service.update(id, dto));
 	}
 
@@ -89,7 +85,7 @@ public class OrderController {
 	@ApiResponses({ @ApiResponse(code = 204, message = "Pedido excluido com sucesso"),
 			@ApiResponse(code = 500, message = "Erro interno do servidor") })
 	@DeleteMapping("/{id}")
-	public ResponseEntity<OrderResponseDto> delete(@PathVariable String id) {
+	public ResponseEntity<OrderResponseDto> delete(@PathVariable Long id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}

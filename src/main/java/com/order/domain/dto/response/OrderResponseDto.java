@@ -1,26 +1,22 @@
 package com.order.domain.dto.response;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
-
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.order.domain.model.Consumer;
+import com.order.domain.model.DeliveryAddress;
+import com.order.domain.model.Items;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
 public class OrderResponseDto {
-	@ApiModelProperty(value = "id do order", example = "123")
-	private String id;
-	@ApiModelProperty(value = "id do produto", example = "123")
-	private String idProduct;
-	@ApiModelProperty(value = "id da offerta", example = "123")
-	private String idOffer;
-	@ApiModelProperty(value = "descrição do pedido", example = "luva")
-	private String description;
-	@ApiModelProperty(value = "quantidade do pedido", example = "11")
-	private String theamount;
-	@ApiModelProperty(value="Data do pedido", example = "yyyy/MM/dd")
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate instante;
+	private BigDecimal valorTotal;
+	private Consumer consumer;
+	private DeliveryAddress deliveryAddress;
+	private List<Items> items;
 }
