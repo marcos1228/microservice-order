@@ -25,6 +25,7 @@ public class Items {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private Long idProduct;
 	private String name;
 	private BigDecimal discount;
 	private BigDecimal theamount;
@@ -34,8 +35,8 @@ public class Items {
 	@JoinColumn(name = "order_id",foreignKey = @ForeignKey(name = "item_pedido_fk", value = ConstraintMode.CONSTRAINT))
 	private Order order;
 	
-	public BigDecimal getSubTotal() {
-		return (price.subtract(discount)).multiply(theamount);
-	}
+//	public BigDecimal getSubTotal() {
+//		return (price.subtract(discount)).multiply(theamount);
+//	}
 
 }

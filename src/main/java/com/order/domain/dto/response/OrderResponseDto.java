@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.order.domain.model.Consumer;
+import com.order.domain.model.Customer;
 import com.order.domain.model.DeliveryAddress;
 import com.order.domain.model.Items;
 
@@ -13,10 +13,11 @@ import lombok.Data;
 
 @Data
 public class OrderResponseDto {
+	private Long idOffer;
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate instante;
 	private BigDecimal valorTotal;
-	private Consumer consumer;
+	private Customer consumer;
 	private DeliveryAddress deliveryAddress;
 	private List<Items> items;
 }

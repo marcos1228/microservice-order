@@ -23,15 +23,15 @@ public class Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private Long idOffer;
 	private LocalDate instante;
 	private BigDecimal valorTotal;
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "consumer_id")
-	private Consumer consumer;
+	private Customer consumer;
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "deliveryAddress_id")
 	private DeliveryAddress deliveryAddress;
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	private List<Items> items;
-	
 }
