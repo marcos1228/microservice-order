@@ -56,7 +56,7 @@ public class ScenarioFactory {
 
 	public static OfferResponseDto offerResponseDto() {
 		var order = new OfferResponseDto();
-		order.setIdProduct("03");
+	//	order.setIdProduct("03");
 		return order;
 	}
 	

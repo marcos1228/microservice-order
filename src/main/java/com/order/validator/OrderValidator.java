@@ -27,31 +27,34 @@ public class OrderValidator {
 	private MessageBuilder messageBuilder;
 
 	public void validatorProduct(OrderRequestDto object) {
-		for(Items item : object.getItems()) {
+		for (Items item : object.getItems()) {
 			Optional<ProductResponseDto> product = productClient.getByProduct(item.getIdProduct());
-			if(!product.isPresent()) {
-				throw new BusinessException("Produto não encontrado "+item.getIdProduct());
+			if (!product.isPresent()) {
+				throw new BusinessException("Produto não encontrado " + item.getIdProduct());
 			}
-			if(!item.getName().equals(product.get().getName())) {
-				throw new BusinessException("Nome produto não encontrado "+item.getName());
-			}
-			
+//			if(!item.getName().equals(product.get().getName())) {
+//				throw new BusinessException("Nome produto não encontrado "+item.getName());
+//			}
+
 		}
-				
+
 	}
 
 	public void validatorOffer(OrderRequestDto object) {
-		for(Items item: object.getItems()) {
-			Optional<OfferResponseDto> optionalOffer = offerClient.getByOffer(object.getIdOffer());
-			if (optionalOffer.isPresent()) {
-				Long idProduct =item.getIdProduct();
-				Long idProduct2 = optionalOffer.get().getIdProduct();
-				if (!idProduct.equals(idProduct2)) {
-					throw new BusinessException(messageBuilder.getMessage("message.exception.offernaocadastrada"));
+		for (Items item : object.getItems()) {
+			Long idOffer = item.getIdOffer();
+			if (idOffer != null) {
+				Optional<OfferResponseDto> optionalOffer = offerClient.getByOffer(idOffer);
+				if (optionalOffer.isPresent()) {
+					Long idProduct = item.getIdProduct();
+					Long idProduct2 = optionalOffer.get().getIdProduct();
+					if (!idProduct.equals(idProduct2)) {
+						throw new BusinessException(messageBuilder.getMessage("message.exception.offernaocadastrada"));
+					}
 				}
-			} else {
-				throw new BusinessException(messageBuilder.getMessage("message.exception.offer"));
+
 			}
-	}
+
+		}
 	}
 }

@@ -26,6 +26,7 @@ public class Items {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Long idProduct;
+	private Long idOffer;
 	private String name;
 	private BigDecimal discount;
 	private BigDecimal theamount;

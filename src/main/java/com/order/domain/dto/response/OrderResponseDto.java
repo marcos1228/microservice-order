@@ -13,7 +13,6 @@ import lombok.Data;
 
 @Data
 public class OrderResponseDto {
-	private Long idOffer;
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate instante;
 	private BigDecimal valorTotal;
