@@ -18,7 +18,7 @@ import org.modelmapper.ModelMapper;
 
 import com.order.controller.client.ProductClient;
 import com.order.domain.dto.response.OrderResponseDto;
-import com.order.domain.dto.response.ProductResponseDto;
+import com.order.domain.model.Items;
 import com.order.domain.model.Order;
 import com.order.exception.BusinessException;
 import com.order.exception.MessageBuilder;
@@ -44,7 +44,7 @@ public class OrderServiceTest {
 
 	@Mock
 	private MessageBuilder messageBuilder;
-	
+
 	@Mock
 	private ProductClient productClient;
 
@@ -55,8 +55,8 @@ public class OrderServiceTest {
 		var orderResponseDto = ScenarioFactory.orderResponseDto();
 		when(orderRepository.findById(order.getId())).thenReturn(optionalOrder);
 		when(modelMapper.map(order, OrderResponseDto.class)).thenReturn(orderResponseDto);
-	//	orderService.getByOrder("01");
-		//verify(orderRepository, times(1)).findById("01");
+		orderService.getByOrder(order.getId());
+		verify(orderRepository, times(1)).findById(order.getId());
 		verify(modelMapper, times(1)).map(order, OrderResponseDto.class);
 
 	}
@@ -64,10 +64,10 @@ public class OrderServiceTest {
 	@Test
 	public void getByOrder_WhenSendIdOrderInvalid_ExpectedException() {
 		var optionalOrderNullo = ScenarioFactory.optionalOrderNullo();
-//		when(orderRepository.findById("03")).thenReturn(optionalOrderNullo);
-	//	assertThatThrownBy(() -> orderService.getByOrder("03")).isInstanceOf(BusinessException.class)
-			//	.hasMessage(messageBuilder.getMessage("message.exception.order"));
-		//verify(orderRepository, times(1)).findById("03");
+		when(orderRepository.findById(Long.valueOf(3))).thenReturn(optionalOrderNullo);
+		assertThatThrownBy(() -> orderService.getByOrder(Long.valueOf(3))).isInstanceOf(BusinessException.class)
+				.hasMessage(messageBuilder.getMessage("message.exception.order"));
+		verify(orderRepository, times(1)).findById(Long.valueOf(3));
 
 	}
 
@@ -76,12 +76,13 @@ public class OrderServiceTest {
 		var order = ScenarioFactory.newOrder();
 		var orderRequestDto = ScenarioFactory.orderRequestDto();
 		when(modelMapper.map(orderRequestDto, Order.class)).thenReturn(order);
-		//doNothing().when(orderValidator).validatorProduct(orderRequestDto);
-		//doNothing().when(orderValidator).validatorOffer(orderRequestDto);
-	//	orderService.save(orderRequestDto);
+		doNothing().when(orderValidator).validatorProduct(orderRequestDto);
+		doNothing().when(orderValidator).validatorOffer(orderRequestDto);
+		doNothing().when(orderValidator).validatorValorTotal(orderRequestDto);
+		orderService.save(orderRequestDto);
 		verify(modelMapper, times(1)).map(orderRequestDto, Order.class);
-		//verify(this.orderValidator, times(1)).validatorProduct(orderRequestDto);
-		///verify(orderValidator, times(1)).validatorOffer(orderRequestDto);
+		verify(this.orderValidator, times(1)).validatorProduct(orderRequestDto);
+		verify(orderValidator, times(1)).validatorOffer(orderRequestDto);
 	}
 
 	@Test
@@ -90,59 +91,35 @@ public class OrderServiceTest {
 //		when(productClient.getByProduct(any(String.class))).thenReturn(product);
 //		
 //		
-		
-		
+
 	}
 
 	@Test
 	public void findByDescription_WhenCallMethod_ExpectedSucess() {
 		var newPageable = ScenarioFactory.newPageable();
 		var newPage = ScenarioFactory.newPage();
-		var description = "Tomada para pele";
-		//when(orderRepository.findByDescriptionContainingIgnoreCase(description, newPageable)).thenReturn(newPage);
-		//orderService.findByDescription(description, newPageable);
-		//verify(orderRepository, times(1)).findByDescriptionContainingIgnoreCase(description, newPageable);
-	}
-
-	@Test
-	public void update_WhenReceivingValidBaseIdAndOrderUpdateDtoRequestWittAllFieldsValidated_ExpectedSucess() {
-		var optionalOrder = ScenarioFactory.newOptionalOrder();
-		var orderRequesUpdate = ScenarioFactory.newOrderRequesUpdate();
-		when(orderRepository.findById(optionalOrder.get().getId())).thenReturn(optionalOrder);
-		when(orderRepository.save(optionalOrder.get())).thenReturn(optionalOrder.get());
-		//orderService.update("01", orderRequesUpdate);
-		verify(orderRepository, times(1)).findById(optionalOrder.get().getId());
-		verify(orderRepository, times(1)).save(optionalOrder.get());
-		
-	}
-
-	@Test
-	public void update_WhenReceivingInvalidBaseIdOrOrderfferUpdateRequestWithSomeInvalidFields_ExpectedException() {
-		var orderRequestUpdate = ScenarioFactory.newOrderRequesUpdate();
-		var optionalOrderNullo = ScenarioFactory.optionalOrderNullo();
-	//	when(orderRepository.findById("02")).thenReturn(optionalOrderNullo);
-		//assertThatThrownBy(() -> orderService.update("02", orderRequestUpdate)).isInstanceOf(BusinessException.class)
-		//		.hasMessage(messageBuilder.getMessage("message.exception.order"));
-	//	verify(orderRepository, times(1)).findById("02");
+		when(orderRepository.findByOrder((long) 1, newPageable)).thenReturn(newPage);
+		orderService.findByDescription((long) 1, newPageable);
+		verify(orderRepository, times(1)).findByOrder((long) 1, newPageable);
 	}
 
 	@Test
 	public void delete_WhenReceivingValidIdOnBase_ExpectedSucess() {
 		var order = ScenarioFactory.newOrder();
 		var optionalOrder = ScenarioFactory.newOptionalOrder();
-	//	when(orderRepository.findById("02")).thenReturn(optionalOrder);
-		//orderService.delete("02");
-		//verify(orderRepository, times(1)).findById("02");
+		when(orderRepository.findById(Long.valueOf(2))).thenReturn(optionalOrder);
+		orderService.delete(Long.valueOf(2));
+		verify(orderRepository, times(1)).findById(Long.valueOf(2));
 		verify(orderRepository, times(1)).delete(order);
 	}
 
 	@Test
 	public void delete_WhenReceivingInvalidBaseId_ExpectedException() {
 		var optionalOrderNullo = ScenarioFactory.optionalOrderNullo();
-//		when(orderRepository.findById("03")).thenReturn(optionalOrderNullo);
-	//	assertThatThrownBy(() -> orderService.delete("03")).isInstanceOf(BusinessException.class)
-		//		.hasMessage(messageBuilder.getMessage("message.exception.order"));
-		//verify(orderRepository, times(1)).findById("03");
+		when(orderRepository.findById(Long.valueOf(3))).thenReturn(optionalOrderNullo);
+		assertThatThrownBy(() -> orderService.delete(Long.valueOf(3))).isInstanceOf(BusinessException.class)
+				.hasMessage(messageBuilder.getMessage("message.exception.order"));
+		verify(orderRepository, times(1)).findById(Long.valueOf(3));
 
 	}
 }

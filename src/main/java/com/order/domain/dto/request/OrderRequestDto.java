@@ -12,6 +12,7 @@ import lombok.Data;
 
 @Data
 public class OrderRequestDto {
+	private Long idOffer;
 	private LocalDate instante;
 	private BigDecimal valorTotal;
 	private Customer consumer;

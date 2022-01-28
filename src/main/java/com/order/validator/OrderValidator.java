@@ -1,5 +1,7 @@
 package com.order.validator;
 
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +34,6 @@ public class OrderValidator {
 			if (!product.isPresent()) {
 				throw new BusinessException("Produto não encontrado " + item.getIdProduct());
 			}
-//			if(!item.getName().equals(product.get().getName())) {
-//				throw new BusinessException("Nome produto não encontrado "+item.getName());
-//			}
-
 		}
 
 	}
@@ -55,6 +53,18 @@ public class OrderValidator {
 
 			}
 
+		}
+	}
+
+	public void validatorValorTotal(OrderRequestDto object) {
+		List<Items> items = object.getItems();
+		BigDecimal somar = BigDecimal.valueOf(0);
+		for (Items item : items) {
+			somar = somar.add(item.subTotal());
+		}
+		BigDecimal valorTotal = object.getValorTotal();
+		if (valorTotal.compareTo(somar) != 0) {
+			throw new BusinessException("Valor total não está batendo");
 		}
 	}
 }
