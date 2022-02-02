@@ -18,7 +18,6 @@ import org.modelmapper.ModelMapper;
 
 import com.order.controller.client.ProductClient;
 import com.order.domain.dto.response.OrderResponseDto;
-import com.order.domain.model.Items;
 import com.order.domain.model.Order;
 import com.order.exception.BusinessException;
 import com.order.exception.MessageBuilder;
@@ -87,10 +86,6 @@ public class OrderServiceTest {
 
 	@Test
 	public void save_WhenReceivedOrderRequestDtoInValidOrIdProductAndIdOferIsInValid_ExpectedException() {
-//		Optional<ProductResponseDto> product = ScenarioFactory.newProduct();
-//		when(productClient.getByProduct(any(String.class))).thenReturn(product);
-//		
-//		
 
 	}
 
