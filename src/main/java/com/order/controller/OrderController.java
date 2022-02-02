@@ -48,17 +48,17 @@ public class OrderController {
 		return ResponseEntity.ok().body(service.getByOrder(id));
 	}
 
-	@ApiOperation(value = "Retorna uma lista de pedido", notes = "Este endpoint retorna uma lista de pedido")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Requisição feita com sucesso"),
-			@ApiResponse(code = 403, message = "Cliente não autorizado"),
-			@ApiResponse(code = 401, message = "O cliente deve está autenticado no sistema"),
-			@ApiResponse(code = 500, message = "Erro interno do servidor") })
-	@GetMapping()
-	public ResponseEntity<Page<OrderResponseDto>> getByDescription(
-			@RequestParam(required = false, defaultValue = "%") Long id,
-			@PageableDefault(sort = "id", direction = Direction.ASC, page = 0, size = 5) Pageable pageable) {
-		return ResponseEntity.ok().body(service.findByDescription(id, pageable));
-	}
+//	@ApiOperation(value = "Retorna uma lista de pedido", notes = "Este endpoint retorna uma lista de pedido")
+//	@ApiResponses(value = { @ApiResponse(code = 200, message = "Requisição feita com sucesso"),
+//			@ApiResponse(code = 403, message = "Cliente não autorizado"),
+//			@ApiResponse(code = 401, message = "O cliente deve está autenticado no sistema"),
+//			@ApiResponse(code = 500, message = "Erro interno do servidor") })
+//	@GetMapping()
+//	public ResponseEntity<Page<OrderResponseDto>> getByDescription(
+//			@RequestParam(required = false, defaultValue = "%") Long id,
+//			@PageableDefault(sort = "id", direction = Direction.ASC, page = 0, size = 5) Pageable pageable) {
+//		return ResponseEntity.ok().body(service.findByDescription(id, pageable));
+//	}
 
 	@ApiOperation(value = "Salvar Pedido", notes = "Este endpoint salvar um pedido ")
 	@ApiResponses({ @ApiResponse(code = 201, message = "Pedido cadastrado com sucesso"),

@@ -10,5 +10,5 @@ import com.order.domain.model.Order;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
-	Page<Order> findByOrder(@RequestParam("id") Long id,Pageable pageable);
+	///Page<Order> findByOrder(@RequestParam("id") Long id,Pageable pageable);
 }

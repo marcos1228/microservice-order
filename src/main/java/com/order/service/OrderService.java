@@ -41,10 +41,10 @@ public class OrderService {
 
 	}
 
-	public Page<OrderResponseDto> findByDescription(Long id, Pageable pageable) {
-		Page<Order> list = orderRepository.findByOrder(id, pageable);
-		return list.map(item -> modelMapper.map(item, OrderResponseDto.class));
-	}
+//	public Page<OrderResponseDto> findByDescription(Long id, Pageable pageable) {
+//		Page<Order> list = orderRepository.findByOrder(id, pageable);
+//		return list.map(item -> modelMapper.map(item, OrderResponseDto.class));
+//	}
 
 	@Transactional
 	public OrderResponseDto save(OrderRequestDto orderRequestDto) {
