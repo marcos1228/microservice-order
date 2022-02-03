@@ -5,7 +5,6 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -59,7 +58,6 @@ public class ScenarioFactory {
 
 	public static OfferResponseDto offerResponseDto() {
 		var order = new OfferResponseDto();
-		// order.setIdProduct("03");
 		return order;
 	}
 

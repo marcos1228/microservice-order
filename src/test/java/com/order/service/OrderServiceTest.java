@@ -93,9 +93,9 @@ public class OrderServiceTest {
 	public void findByDescription_WhenCallMethod_ExpectedSucess() {
 		var newPageable = ScenarioFactory.newPageable();
 		var newPage = ScenarioFactory.newPage();
-		when(orderRepository.findByOrder((long) 1, newPageable)).thenReturn(newPage);
-		orderService.findByDescription((long) 1, newPageable);
-		verify(orderRepository, times(1)).findByOrder((long) 1, newPageable);
+		when(orderRepository.findBy(newPageable)).thenReturn(newPage);
+		orderService.findByDescription(newPageable);
+		verify(orderRepository, times(1)).findBy(newPageable);
 	}
 
 	@Test
