@@ -20,6 +20,9 @@ import com.order.exception.MessageBuilder;
 import com.order.repository.OrderRepository;
 import com.order.validator.OrderValidator;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class OrderService {
 	@Autowired
@@ -35,14 +38,17 @@ public class OrderService {
 	private MessageBuilder messageBuilder;
 
 	public OrderResponseDto getByOrder(Long id) {
+		log.info("id [{}] will be for search for!", id);
 		Order order = orderRepository.findById(id)
 				.orElseThrow(() -> new BusinessException(messageBuilder.getMessage("message.exception.order")));
+		log.warn("The return [{}]", order);
 		return modelMapper.map(order, OrderResponseDto.class);
 
 	}
 
-	public Page<OrderResponseDto> findByDescription( Pageable pageable) {
-		Page<Order> list = orderRepository.findBy( pageable);
+	public Page<OrderResponseDto> findByDescription(Pageable pageable) {
+		Page<Order> list = orderRepository.findBy(pageable);
+		log.info("Orders will be listed in pageable form.");
 		return list.map(item -> modelMapper.map(item, OrderResponseDto.class));
 	}
 
@@ -57,13 +63,16 @@ public class OrderService {
 			i.setOrder(order);
 		}
 		Order save = orderRepository.save(order);
+		log.info("Successfully saved!");
 		return modelMapper.map(save, OrderResponseDto.class);
 	}
 
 	@Transactional
 	public void delete(Long id) {
+		log.info("The id delete[{}]", id);
 		Order order = orderRepository.findById(id)
 				.orElseThrow(() -> new BusinessException(messageBuilder.getMessage("message.exception.order")));
+		log.warn("The order delete [{}]", order);
 		orderRepository.delete(order);
 	}
 }
