@@ -31,7 +31,7 @@ public class ClientErrorDecoder implements ErrorDecoder {
 	
 	
 	} catch (IOException e) {
-		log.info("Method={}", "decode");
+		log.error("Method={} cause={} message={}", "decode", e.getCause(), e.getMessage());
 	}
 	return new Default().decode(methodKey, response);
 	}
