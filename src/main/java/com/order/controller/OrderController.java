@@ -48,7 +48,7 @@ public class OrderController {
 			@ApiResponse(code = 500, message = "Erro interno do servidor") })
 	@GetMapping("/{id}")
 	public ResponseEntity<OrderResponseDto> getByOrder(@PathVariable Long id) {
-		log.info("The order return");
+		log.info("Method={}  message={}","getByOrder", "buscando por id");
 		return ResponseEntity.ok().body(service.getByOrder(id));
 	}
 
@@ -58,10 +58,10 @@ public class OrderController {
 			@ApiResponse(code = 401, message = "O cliente deve está autenticado no sistema"),
 			@ApiResponse(code = 500, message = "Erro interno do servidor") })
 	@GetMapping()
-	public ResponseEntity<Page<OrderResponseDto>> getByDescription(
+	public ResponseEntity<Page<OrderResponseDto>> getByList(
 			@PageableDefault(direction = Direction.ASC, page = 0, size = 5) Pageable pageable) {
-		log.info("Orders will be listed in pageable form");
-		return ResponseEntity.ok().body(service.findByDescription(pageable));
+		log.info("Method={} message={}", "getByList", "lista pedido");
+		return ResponseEntity.ok().body(service.findByList(pageable));
 	}
 
 	@ApiOperation(value = "Salvar Pedido", notes = "Este endpoint salvar um pedido ")
@@ -73,7 +73,7 @@ public class OrderController {
 	public ResponseEntity<OrderResponseDto> save(@Valid @RequestBody OrderRequestDto orderRequestDto) {
 		OrderResponseDto save = service.save(orderRequestDto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(save.getId()).toUri();
-		log.info("The order saved");
+		log.info("Method={} message={}", "save", "savando um pedido");
 		return ResponseEntity.created(uri).body(save);
 	}
 
@@ -83,7 +83,7 @@ public class OrderController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<OrderResponseDto> delete(@PathVariable Long id) {
 		service.delete(id);
-		log.info("The  order deleted");
+		log.info("Method={} message={}", "delete", "deleta um pedido");
 		return ResponseEntity.noContent().build();
 	}
 }

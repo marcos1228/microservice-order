@@ -31,9 +31,7 @@ public class ClientErrorDecoder implements ErrorDecoder {
 	
 	
 	} catch (IOException e) {
-		log.info("ERROR_DEFAULT_WITHOUT_HTTP_CODE");
-		e.getCause();
-		e.getMessage();
+		log.info("Method={}", "decode");
 	}
 	return new Default().decode(methodKey, response);
 	}

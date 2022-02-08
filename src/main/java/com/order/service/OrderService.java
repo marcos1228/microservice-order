@@ -38,22 +38,29 @@ public class OrderService {
 	private MessageBuilder messageBuilder;
 
 	public OrderResponseDto getByOrder(Long id) {
-		log.info("id [{}] will be for search for!", id);
+		log.info("Method={}", "getByOrder");
 		Order order = orderRepository.findById(id)
 				.orElseThrow(() -> new BusinessException(messageBuilder.getMessage("message.exception.order")));
-		log.warn("The return [{}]", order);
 		return modelMapper.map(order, OrderResponseDto.class);
 
 	}
 
+	/**
+	 * @deprecated Use {@link #findByList(Pageable)} instead
+	 */
 	public Page<OrderResponseDto> findByDescription(Pageable pageable) {
+		return findByList(pageable);
+	}
+
+	public Page<OrderResponseDto> findByList(Pageable pageable) {
+		log.info("Method={}", "findByList");
 		Page<Order> list = orderRepository.findBy(pageable);
-		log.info("Orders will be listed in pageable form.");
 		return list.map(item -> modelMapper.map(item, OrderResponseDto.class));
 	}
 
 	@Transactional
 	public OrderResponseDto save(OrderRequestDto orderRequestDto) {
+		log.info("Method={}", "save");
 		Order order = modelMapper.map(orderRequestDto, Order.class);
 		orderValidator.validatorProduct(orderRequestDto);
 		orderValidator.validatorOffer(orderRequestDto);
@@ -63,16 +70,14 @@ public class OrderService {
 			i.setOrder(order);
 		}
 		Order save = orderRepository.save(order);
-		log.info("Successfully saved!");
 		return modelMapper.map(save, OrderResponseDto.class);
 	}
 
 	@Transactional
 	public void delete(Long id) {
-		log.info("The id delete[{}]", id);
+		log.info("Method={}", "delete");
 		Order order = orderRepository.findById(id)
 				.orElseThrow(() -> new BusinessException(messageBuilder.getMessage("message.exception.order")));
-		log.warn("The order delete [{}]", order);
 		orderRepository.delete(order);
 	}
 }

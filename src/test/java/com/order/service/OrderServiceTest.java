@@ -94,7 +94,7 @@ public class OrderServiceTest {
 		var newPageable = ScenarioFactory.newPageable();
 		var newPage = ScenarioFactory.newPage();
 		when(orderRepository.findBy(newPageable)).thenReturn(newPage);
-		orderService.findByDescription(newPageable);
+		orderService.findByList(newPageable);
 		verify(orderRepository, times(1)).findBy(newPageable);
 	}
 
