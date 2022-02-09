@@ -1,5 +1,7 @@
 package com.order.controller;
 
+import java.net.URI;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.order.domain.dto.request.OrderRequestDto;
 import com.order.domain.dto.response.OrderResponseDto;
@@ -27,11 +29,13 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import lombok.extern.slf4j.Slf4j;
 
 @Api("orders")
 @CrossOrigin(origins = "http://localhost:8082")
 @RestController
 @RequestMapping("/api/orders")
+@Slf4j
 public class OrderController {
 
 	@Autowired
@@ -44,6 +48,7 @@ public class OrderController {
 			@ApiResponse(code = 500, message = "Erro interno do servidor") })
 	@GetMapping("/{id}")
 	public ResponseEntity<OrderResponseDto> getByOrder(@PathVariable Long id) {
+		log.info("Method={}  message={}","getByOrder", "buscando por id");
 		return ResponseEntity.ok().body(service.getByOrder(id));
 	}
 
@@ -53,9 +58,10 @@ public class OrderController {
 			@ApiResponse(code = 401, message = "O cliente deve está autenticado no sistema"),
 			@ApiResponse(code = 500, message = "Erro interno do servidor") })
 	@GetMapping()
-	public ResponseEntity<Page<OrderResponseDto>> getByDescription(
+	public ResponseEntity<Page<OrderResponseDto>> getByList(
 			@PageableDefault(direction = Direction.ASC, page = 0, size = 5) Pageable pageable) {
-		return ResponseEntity.ok().body(service.findByDescription(pageable));
+		log.info("Method={} message={}", "getByList", "lista pedido");
+		return ResponseEntity.ok().body(service.findByList(pageable));
 	}
 
 	@ApiOperation(value = "Salvar Pedido", notes = "Este endpoint salvar um pedido ")
@@ -66,7 +72,9 @@ public class OrderController {
 	@PostMapping()
 	public ResponseEntity<OrderResponseDto> save(@Valid @RequestBody OrderRequestDto orderRequestDto) {
 		OrderResponseDto save = service.save(orderRequestDto);
-		return ResponseEntity.status(HttpStatus.CREATED).body(save);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(save.getId()).toUri();
+		log.info("Method={} message={}", "save", "savando um pedido");
+		return ResponseEntity.created(uri).body(save);
 	}
 
 	@ApiOperation(value = "Exclui um pedido", notes = "Este endpoint exclui um pedido")
@@ -75,6 +83,7 @@ public class OrderController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<OrderResponseDto> delete(@PathVariable Long id) {
 		service.delete(id);
+		log.info("Method={} message={}", "delete", "deleta um pedido");
 		return ResponseEntity.noContent().build();
 	}
 }

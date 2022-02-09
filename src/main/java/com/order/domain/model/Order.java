@@ -15,10 +15,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.ToString;
 
+@Data
 @Entity
 @Table(name = "TB_ORDER")
-@Data
 public class Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +33,7 @@ public class Order {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "deliveryAddress_id")
 	private DeliveryAddress deliveryAddress;
+	@ToString.Exclude
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	private List<Items> items;
 	

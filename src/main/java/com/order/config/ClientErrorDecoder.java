@@ -1,6 +1,7 @@
 package com.order.config;
 
 import java.io.IOException;
+
 import java.io.Reader;
 
 import org.springframework.stereotype.Component;
@@ -13,6 +14,8 @@ import com.order.exception.BusinessException;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import lombok.var;
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Component
 public class ClientErrorDecoder implements ErrorDecoder {
 
@@ -24,13 +27,11 @@ public class ClientErrorDecoder implements ErrorDecoder {
 	ObjectMapper mapper = new ObjectMapper();
 	mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 	final var error = mapper.readValue(result, BusinessException.class);
-	//return new BusinessException(error.getTimestamp(), error.getMessage(), error.getStatus());
 	return new BusinessException(error.getMessage());
 	
 	
-	} catch (IOException ex) {
-	//log.error(Constants.LOG_ERROR_DEFAULT_WITHOUT_HTTP_CODE, "decode", Constants.EXCEPTION, ex.getMessage(),
-//	ex.getCause());
+	} catch (IOException e) {
+		log.error("Method={} cause={} message={}", "decode", e.getCause(), e.getMessage());
 	}
 	return new Default().decode(methodKey, response);
 	}

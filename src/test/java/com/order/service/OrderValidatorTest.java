@@ -52,39 +52,19 @@ public class OrderValidatorTest {
 	public void validatorProduct_WhenReceivedOrderRequestDtoWithInvalidIdProduct_ExpectedException() {
 		var orderRequestDto = ScenarioFactory.orderRequestDto();
 		var product = ScenarioFactory.newProductNullo();
-//		when(productClient.getByProduct("03")).thenReturn(product);
-//		assertThatThrownBy(() -> orderValidator.validatorProduct(orderRequestDto)).isInstanceOf(BusinessException.class)
-//				.hasMessage(messageBuilder.getMessage("message.exception.product"));
-//		verify(productClient).getByProduct("03");
 
 	}
 
 	@Test
 	public void validatorOffer_WhenReceivedOrderRequestDtoWithValidIdOfferAndIProductEqualIdProduct2_ExpectedSuccess() {
-//		var orderRequestDto = ScenarioFactory.orderRequestDto();
-//		Optional<OfferResponseDto> newOffer = ScenarioFactory.newOffer1();
-//		when(offerClient.getByOffer(any())).thenReturn(newOffer);
-//		orderValidator.validatorOffer(orderRequestDto);
-//		verify(offerClient, times(1)).getByOffer(any());
 	}
 
 	@Test
 	public void validatorOffer_WhenReceivedOrderRequestDtoWithValidIdOfferAndIProductDifferentIdProduct2_ExpectedSuccess() {
-//		var orderRequestDto = ScenarioFactory.orderRequestDto();
-//		Optional<OfferResponseDto> newOffer = ScenarioFactory.newOffer();
-//		when(offerClient.getByOffer(any())).thenReturn(newOffer);
-//		assertThatThrownBy(() -> orderValidator.validatorOffer(orderRequestDto)).isInstanceOf(BusinessException.class);
-//		verify(offerClient, times(1)).getByOffer(any());
 	}
 
 	@Test
 	public void validatorProduct_WhenReceivedOrderRequestDtoWithInvalidIdOffer_ExpectedSuccess() {
-//		var orderRequestDto = ScenarioFactory.orderRequestDto();
-//		var offer = ScenarioFactory.newOfferNullo();
-//		when(offerClient.getByOffer(any())).thenReturn(offer);
-////		assertThatThrownBy(() -> orderValidator.validatorOffer(orderRequestDto)).isInstanceOf(BusinessException.class)
-//				.hasMessage(messageBuilder.getMessage("message.exception.offer"));
-//		verify(offerClient).getByOffer("03");
 	}
 
 }
