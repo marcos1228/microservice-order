@@ -26,19 +26,19 @@ public class ScenarioFactory {
 
 	public static Order newOrder() {
 		var order = new Order();
-		
+
 		order.setIdOffer(Long.valueOf("1"));
-		
+
 		order.setInstante(LocalDate.ofInstant(Instant.now(), ZoneOffset.systemDefault()));
-		
+
 		order.setValorTotal(BigDecimal.valueOf(240));
-		
+
 		order.setConsumer(new Customer());
-		
+
 		order.setDeliveryAddress(new DeliveryAddress());
-		
+
 		order.setItems(new ArrayList<Items>());
-		
+
 		return order;
 	}
 
@@ -55,76 +55,56 @@ public class ScenarioFactory {
 
 	public static OrderResponseDto orderResponseDto() {
 		var order = new OrderResponseDto();
-		
 		order.setIdOffer(Long.valueOf("1"));
-		
 		order.setInstante(LocalDate.ofInstant(Instant.now(), ZoneOffset.systemDefault()));
-		
 		order.setValorTotal(BigDecimal.valueOf(240));
-		
 		order.setConsumer(new Customer());
-		
 		order.setDeliveryAddress(new DeliveryAddress());
-		
 		return order;
 	}
 
 	public static OfferResponseDto offerResponseDto() {
-		
 		var order = new OfferResponseDto();
-		
 		return order;
 	}
 
 	public static Optional<Order> newOptionalOrder() {
-		
 		return Optional.of(newOrder());
 	}
 
 	public static Optional<Order> optionalOrderNullo() {
-		
 		return Optional.empty();
 	}
 
 	public static PageRequest newPageable() {
-		
 		PageRequest pageable = PageRequest.ofSize(5);
-		
 		return pageable;
 
 	}
 
 	public static Page<Order> newPage() {
-		
 		ArrayList<Order> order = new ArrayList<>();
-		
 		order.add(new Order());
-		
 		return new PageImpl<>(order);
 	}
 
 	public static Optional<ProductResponseDto> newProduct() {
-		
 		return Optional.of(new ProductResponseDto());
 	}
 
 	public static Optional<ProductResponseDto> newProductNullo() {
-		
 		return Optional.empty();
 	}
 
 	public static Optional<OfferResponseDto> newOffer() {
-		
 		return Optional.of(new OfferResponseDto());
 	}
 
 	public static Optional<OfferResponseDto> newOffer1() {
-		
 		return Optional.of(offerResponseDto());
 	}
 
 	public static Optional<OfferResponseDto> newOfferNullo() {
-		
 		return Optional.empty();
 	}
 

@@ -12,6 +12,5 @@ import com.order.domain.dto.response.ProductResponseDto;
 public interface ProductClient {
 
 	@GetMapping(value = "${product.getbyid}")
-	
-	Optional<ProductResponseDto>  getByProduct(@PathVariable("id") Long id);
+	Optional<ProductResponseDto> getByProduct(@PathVariable("id") Long id);
 }
