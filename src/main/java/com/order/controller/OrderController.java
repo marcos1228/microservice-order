@@ -48,7 +48,7 @@ public class OrderController {
 			@ApiResponse(code = 500, message = "Erro interno do servidor") })
 	@GetMapping("/{id}")
 	public ResponseEntity<OrderResponseDto> getByOrder(@PathVariable Long id) {
-		log.info("Method={}  message={}","getByOrder", "buscando por id");
+		log.info("Method={}  message={}", "getByOrder", "buscando por id");
 		return ResponseEntity.ok().body(service.getByOrder(id));
 	}
 
@@ -65,6 +65,7 @@ public class OrderController {
 	}
 
 	@ApiOperation(value = "Salvar Pedido", notes = "Este endpoint salvar um pedido ")
+
 	@ApiResponses({ @ApiResponse(code = 201, message = "Pedido cadastrado com sucesso"),
 			@ApiResponse(code = 401, message = "O cliente deve está autenticado ao sistema"),
 			@ApiResponse(code = 403, message = "Cliente não autorizado"),

@@ -8,7 +8,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -49,6 +48,7 @@ public class OrderServiceTest {
 
 	@Test
 	public void getByOrder_WhenSendIdOrderValid_ExpectedSucess() {
+
 		var order = ScenarioFactory.newOrder();
 		var optionalOrder = ScenarioFactory.newOptionalOrder();
 		var orderResponseDto = ScenarioFactory.orderResponseDto();
@@ -62,6 +62,7 @@ public class OrderServiceTest {
 
 	@Test
 	public void getByOrder_WhenSendIdOrderInvalid_ExpectedException() {
+
 		var optionalOrderNullo = ScenarioFactory.optionalOrderNullo();
 		when(orderRepository.findById(Long.valueOf(3))).thenReturn(optionalOrderNullo);
 		assertThatThrownBy(() -> orderService.getByOrder(Long.valueOf(3))).isInstanceOf(BusinessException.class)
@@ -72,6 +73,7 @@ public class OrderServiceTest {
 
 	@Test
 	public void save_WhenReceivedOrderRequestDtoValidAndIdProductAndIdOferIsValid_ExpectedSucess() {
+
 		var order = ScenarioFactory.newOrder();
 		var orderRequestDto = ScenarioFactory.orderRequestDto();
 		when(modelMapper.map(orderRequestDto, Order.class)).thenReturn(order);
@@ -100,6 +102,7 @@ public class OrderServiceTest {
 
 	@Test
 	public void delete_WhenReceivingValidIdOnBase_ExpectedSucess() {
+
 		var order = ScenarioFactory.newOrder();
 		var optionalOrder = ScenarioFactory.newOptionalOrder();
 		when(orderRepository.findById(Long.valueOf(2))).thenReturn(optionalOrder);
@@ -110,6 +113,7 @@ public class OrderServiceTest {
 
 	@Test
 	public void delete_WhenReceivingInvalidBaseId_ExpectedException() {
+
 		var optionalOrderNullo = ScenarioFactory.optionalOrderNullo();
 		when(orderRepository.findById(Long.valueOf(3))).thenReturn(optionalOrderNullo);
 		assertThatThrownBy(() -> orderService.delete(Long.valueOf(3))).isInstanceOf(BusinessException.class)

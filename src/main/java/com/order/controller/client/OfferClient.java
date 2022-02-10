@@ -10,6 +10,7 @@ import com.order.domain.dto.response.OfferResponseDto;
 
 @FeignClient(name = "${offer.name}", url = "${offer.url}")
 public interface OfferClient {
+
 	@GetMapping("${offer.getbyid}")
 	Optional<OfferResponseDto> getByOffer(@PathVariable("id") Long id);
 }

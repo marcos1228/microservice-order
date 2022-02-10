@@ -10,15 +10,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.order.domain.dto.response.ErrorDtoResponse;
 import com.order.exception.BusinessException;
 
-
 @RestControllerAdvice
 public class ControllerAdvice {
 
 	@ExceptionHandler(BusinessException.class)
 	public ResponseEntity<?> BusinessException(BusinessException ex) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-				//.body(ErrorDtoResponse.builder().message(ex.getMessage()).origin(ex.getOrigin()).build());
-		.body(ErrorDtoResponse.builder().message(ex.getMessage()).build());
+				.body(ErrorDtoResponse.builder().message(ex.getMessage()).build());
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
@@ -38,5 +36,4 @@ public class ControllerAdvice {
 				.body(ErrorDtoResponse.builder().message(ex.getMessage()).build());
 	}
 
-	
 }

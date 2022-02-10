@@ -26,12 +26,19 @@ public class ScenarioFactory {
 
 	public static Order newOrder() {
 		var order = new Order();
+
 		order.setIdOffer(Long.valueOf("1"));
+
 		order.setInstante(LocalDate.ofInstant(Instant.now(), ZoneOffset.systemDefault()));
+
 		order.setValorTotal(BigDecimal.valueOf(240));
+
 		order.setConsumer(new Customer());
+
 		order.setDeliveryAddress(new DeliveryAddress());
+
 		order.setItems(new ArrayList<Items>());
+
 		return order;
 	}
 

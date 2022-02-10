@@ -45,13 +45,6 @@ public class OrderService {
 
 	}
 
-	/**
-	 * @deprecated Use {@link #findByList(Pageable)} instead
-	 */
-	public Page<OrderResponseDto> findByDescription(Pageable pageable) {
-		return findByList(pageable);
-	}
-
 	public Page<OrderResponseDto> findByList(Pageable pageable) {
 		log.info("Method={}", "findByList");
 		Page<Order> list = orderRepository.findBy(pageable);
@@ -69,6 +62,7 @@ public class OrderService {
 		for (Items i : order.getItems()) {
 			i.setOrder(order);
 		}
+
 		Order save = orderRepository.save(order);
 		return modelMapper.map(save, OrderResponseDto.class);
 	}
