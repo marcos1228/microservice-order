@@ -19,18 +19,23 @@ import lombok.Data;
 public class OrderRequestDto {
 	@ApiModelProperty(value = "Id da offerta", example = "123")
 	private Long idOffer;
+	
 	@ApiModelProperty(value = "data do instante do pedido", example = "dd/MM/yyyy")
 	private LocalDate instante;
+	
 	@ApiModelProperty(value = "valor total do pedido", example = "240")
 	@NotNull(message = "{valorTotal.notNull}")
 	@Positive(message = "{valorTotal.positive}")
 	private BigDecimal valorTotal;
+	
 	@ApiModelProperty(value = "nome do consumidor", example = "Maria")
 	@NotNull(message = "{consumer.notNull}")
 	private Customer consumer;
+	
 	@ApiModelProperty(value = "Endereço de entrega", example = "Rua 4...")
 	@NotNull(message = "{deliveryAddress.notNull}")
 	private DeliveryAddress deliveryAddress;
+	
 	@ApiModelProperty(value = "Itens do pedido", example = "Dorflex, tossilax")
 	@NotNull(message = "{items.notNull}")
 	@Size(min = 1)

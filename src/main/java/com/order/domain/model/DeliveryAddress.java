@@ -12,16 +12,28 @@ public class DeliveryAddress {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private String neighborhood;
+	
 	private String city;
+	
 	private String complements;
+	
 	private String addressDescription;
+	
 	private String cep;
+	
 	private Integer number;
+	
 	private String state;
+	
 	private String type;
+	
 	private String referencePoint;
+	
 	private String recipientName;
+	
 	private String recipientDocumentNumber;
+	
 	private String contactPhone;
 }

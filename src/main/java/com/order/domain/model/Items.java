@@ -25,12 +25,19 @@ public class Items {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private Long idProduct;
+	
 	private Long idOffer;
+	
 	private String name;
+	
 	private BigDecimal discount;
+	
 	private BigDecimal theamount;
+	
 	private BigDecimal price;
+	
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "order_id",foreignKey = @ForeignKey(name = "item_pedido_fk", value = ConstraintMode.CONSTRAINT))

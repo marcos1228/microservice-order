@@ -12,10 +12,14 @@ import lombok.Data;
 @Entity
 @Data
 public class Customer {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private String documentNumber;
+	
 	private String email;
+	
 	private String name;
 }

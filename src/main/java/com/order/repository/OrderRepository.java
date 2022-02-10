@@ -9,5 +9,6 @@ import com.order.domain.model.Order;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
+	
 	Page<Order> findBy(Pageable pageable);
 }

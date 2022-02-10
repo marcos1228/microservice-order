@@ -17,13 +17,18 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig {
 	@Bean
 	public Docket api() {
+
 		return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.any())
+
 				.paths(PathSelectors.ant("/api/**")).build().apiInfo(apiInfo());
 	}
 
 	private ApiInfo apiInfo() {
+
 		return new ApiInfoBuilder().contact(new Contact("Marcos Barbosa", "", "")).title("Order")
+
 				.description("Documentação do MicroService  de Order").license("Apache Licence Version 2.0")
+
 				.licenseUrl("https://apache.org").version("1.0").build();
 
 	}

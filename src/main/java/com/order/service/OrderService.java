@@ -38,46 +38,58 @@ public class OrderService {
 	private MessageBuilder messageBuilder;
 
 	public OrderResponseDto getByOrder(Long id) {
+		
 		log.info("Method={}", "getByOrder");
+		
 		Order order = orderRepository.findById(id)
 				.orElseThrow(() -> new BusinessException(messageBuilder.getMessage("message.exception.order")));
+		
 		return modelMapper.map(order, OrderResponseDto.class);
 
 	}
 
-	/**
-	 * @deprecated Use {@link #findByList(Pageable)} instead
-	 */
-	public Page<OrderResponseDto> findByDescription(Pageable pageable) {
-		return findByList(pageable);
-	}
-
 	public Page<OrderResponseDto> findByList(Pageable pageable) {
 		log.info("Method={}", "findByList");
+		
 		Page<Order> list = orderRepository.findBy(pageable);
+		
 		return list.map(item -> modelMapper.map(item, OrderResponseDto.class));
 	}
 
 	@Transactional
 	public OrderResponseDto save(OrderRequestDto orderRequestDto) {
+		
 		log.info("Method={}", "save");
+		
 		Order order = modelMapper.map(orderRequestDto, Order.class);
+		
 		orderValidator.validatorProduct(orderRequestDto);
+		
 		orderValidator.validatorOffer(orderRequestDto);
+		
 		orderValidator.validatorValorTotal(orderRequestDto);
+		
 		order.setInstante(LocalDate.ofInstant(Instant.now(), ZoneOffset.systemDefault()));
+		
 		for (Items i : order.getItems()) {
+			
 			i.setOrder(order);
+			
 		}
+		
 		Order save = orderRepository.save(order);
+		
 		return modelMapper.map(save, OrderResponseDto.class);
 	}
 
 	@Transactional
 	public void delete(Long id) {
+		
 		log.info("Method={}", "delete");
+		
 		Order order = orderRepository.findById(id)
 				.orElseThrow(() -> new BusinessException(messageBuilder.getMessage("message.exception.order")));
+		
 		orderRepository.delete(order);
 	}
 }
