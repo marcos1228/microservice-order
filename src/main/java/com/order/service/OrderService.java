@@ -69,7 +69,7 @@ public class OrderService {
 
 	@Transactional
 	public void delete(Long id) {
-		log.info("Method={}", "delete");
+		log.info("Method={} id=[{}]", "delete", id);
 		Order order = orderRepository.findById(id)
 				.orElseThrow(() -> new BusinessException(messageBuilder.getMessage("message.exception.order")));
 		orderRepository.delete(order);

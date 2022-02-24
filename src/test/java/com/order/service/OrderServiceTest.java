@@ -8,6 +8,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -17,6 +20,7 @@ import org.modelmapper.ModelMapper;
 
 import com.order.controller.client.ProductClient;
 import com.order.domain.dto.response.OrderResponseDto;
+import com.order.domain.model.Items;
 import com.order.domain.model.Order;
 import com.order.exception.BusinessException;
 import com.order.exception.MessageBuilder;
@@ -80,6 +84,7 @@ public class OrderServiceTest {
 		doNothing().when(orderValidator).validatorProduct(orderRequestDto);
 		doNothing().when(orderValidator).validatorOffer(orderRequestDto);
 		doNothing().when(orderValidator).validatorValorTotal(orderRequestDto);
+		List<Items> i = new ArrayList<>();
 		orderService.save(orderRequestDto);
 		verify(modelMapper, times(1)).map(orderRequestDto, Order.class);
 		verify(this.orderValidator, times(1)).validatorProduct(orderRequestDto);
