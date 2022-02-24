@@ -1,16 +1,18 @@
 package com.order.controller.client;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.order.domain.dto.response.OfferResponseDto;
+
+
 
 @FeignClient(name = "${offer.name}", url = "${offer.url}")
 public interface OfferClient {
 
-	@GetMapping("${offer.getbyid}")
-	Optional<OfferResponseDto> getByOffer(@PathVariable("id") Long id);
+	@PostMapping("${offer.getbyid}")
+	public List<Long> getByOffer(@RequestBody List<Long> idOffer);
 }
